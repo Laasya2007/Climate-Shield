@@ -97,6 +97,79 @@ knowledge = {
             "It also increases risks of floods, droughts, and heatwaves."
         ]
     }
+        ,
+
+    "drought": {
+
+        "what": [
+
+            "A drought is a prolonged period of below-average rainfall that leads to water shortages.",
+
+            "Droughts can affect agriculture, drinking water supplies, and ecosystems."
+        ],
+
+        "precautions": [
+
+            "Conserve water whenever possible during drought conditions.",
+
+            "Follow local water-use restrictions and store emergency water supplies."
+        ],
+
+        "effects": [
+
+            "Droughts can reduce crop yields and increase the risk of wildfires.",
+
+            "Long-term droughts may lead to water scarcity and economic losses."
+        ]
+    },
+
+    "wildfire": {
+
+        "what": [
+
+            "Wildfires are uncontrolled fires that spread through forests, grasslands, or other vegetation.",
+
+            "Wildfires can spread rapidly during hot, dry, and windy conditions."
+        ],
+
+        "precautions": [
+
+            "Follow evacuation orders immediately if a wildfire is nearby.",
+
+            "Keep emergency supplies ready and create a family evacuation plan."
+        ],
+
+        "effects": [
+
+            "Wildfires can destroy homes, forests, and wildlife habitats.",
+
+            "Smoke from wildfires can seriously affect air quality and health."
+        ]
+    },
+
+    "landslide": {
+
+        "what": [
+
+            "A landslide is the movement of rock, soil, or debris down a slope.",
+
+            "Heavy rainfall and earthquakes are common causes of landslides."
+        ],
+
+        "precautions": [
+
+            "Avoid steep slopes during periods of heavy rainfall.",
+
+            "Follow local warnings and evacuate if landslide risks are reported."
+        ],
+
+        "effects": [
+
+            "Landslides can damage roads, homes, and infrastructure.",
+
+            "They may block rivers and create additional flooding risks."
+        ]
+    }
 }
 
 # ==========================================
@@ -150,9 +223,17 @@ def detect_topic(user):
 
     elif "cyclone" in user or "storm" in user:
         return "cyclone"
+    elif any(word in user for word in
+         ["drought", "water shortage", "dry season"]):
+    return "drought"
 
-    elif "climate" in user or "global warming" in user:
-        return "climate change"
+    elif any(word in user for word in
+         ["wildfire", "forest fire", "bushfire"]):
+    return "wildfire"
+
+    elif any(word in user for word in
+         ["landslide", "mudslide", "rockslide"]):
+    return "landslide"
 
     return None
 
@@ -227,7 +308,6 @@ def generate_response(user_input):
     # ======================================
     # CONTEXT MEMORY
     # ======================================
-
     if "what should i do" in user:
 
         previous_topics = " ".join(
@@ -251,6 +331,25 @@ def generate_response(user_input):
             return random.choice(
                 knowledge["cyclone"]["precautions"]
             )
+
+        elif "drought" in previous_topics:
+
+            return random.choice(
+                knowledge["drought"]["precautions"]
+            )
+
+        elif "wildfire" in previous_topics:
+
+            return random.choice(
+                knowledge["wildfire"]["precautions"]
+            )
+
+        elif "landslide" in previous_topics:
+
+            return random.choice(
+                knowledge["landslide"]["precautions"]
+            )
+        
 
     # ======================================
     # TOPIC DETECTION
